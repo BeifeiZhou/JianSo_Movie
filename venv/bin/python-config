@@ -1,4 +1,4 @@
-#!/root/fs_work/venv/bin/python
+#!/Users/but0n/Desktop/flask_test/venv/bin/python
 
 import sys
 import getopt
