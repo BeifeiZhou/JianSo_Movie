@@ -19,7 +19,7 @@ class domPa(object):
         self.title = title
         self.detail = detail
         self.dom = BeautifulSoup(self.page.text, 'html.parser')
-        self.p = Pool(4)
+        self.p = Pool(5)
 
     def run(self):
         robLog(888, self.status)
@@ -47,7 +47,7 @@ def botTask(i,e):
     dom = BeautifulSoup(pagee.text, 'html.parser')
     datas = []
     for ee in dom.select('span.xunlei')[0].select('a'):
-        movieName = ee.get('thunderrestitle')
+        movieName = e.get('title')
         movieLink = ee.get('href')
         # saveData(movieName, movieLink)
         robLog(i, 'Got it ! [%s]@ %s' % (movieName, movieLink))
@@ -64,21 +64,21 @@ def saveData(name,link):
 mLog(u'but0n,I\'m Running!')
 mLog('Connect Database...')
 db = sqlite3.connect('mvv.db')
-db.execute('CREATE TABLE movies(name text primary key, link text)')
+db.execute('CREATE TABLE movies(name text, link text primary key)')
 
 
 if db:
     mLog('Succeed!')
 i = 1
-while i<4:
+while i:
     i = i + 1
-    bug = domPa('/movie/list/---'+str(i)+'-', 'a')
+    bug = domPa('/movie/list/-----p'+str(i), 'a')
     if bug.status == 200:
-        mLog('HTTP Connect Succeed!')
+        mLog('HTTP Connect Succeed! To [p%i]' % i)
         bug.run()
     else:
         mLog('Checkout your network!')
-
+	i = 0
 
 
 db.close()
