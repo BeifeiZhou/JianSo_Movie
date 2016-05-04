@@ -63,7 +63,7 @@ def saveData(name,link):
 
 mLog(u'but0n,I\'m Running!')
 mLog('Connect Database...')
-db = sqlite3.connect('mvv.db')
+db = sqlite3.connect('mv.db')
 db.execute('CREATE TABLE movies(name text, link text primary key)')
 
 
