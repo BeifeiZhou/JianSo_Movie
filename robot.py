@@ -56,30 +56,31 @@ def botTask(i,e):
     robLog(i, 'Task done! Cost %0.2fs' % (end-start), '\033[0;36m')
     return (datas)
 
-def saveData(name,link):
-    db.execute("INSERT INTO movies VALUES(name,link)")
-    db.commit()
 
 
 mLog(u'but0n,I\'m Running!')
 mLog('Connect Database...')
 db = sqlite3.connect('mv.db')
-db.execute('CREATE TABLE movies(name text, link text primary key)')
+
+
 
 
 if db:
     mLog('Succeed!')
-i = 1
-while i:
-    i = i + 1
-    bug = domPa('/movie/list/-----p'+str(i), 'a')
-    if bug.status == 200:
-        mLog('HTTP Connect Succeed! To [p%i]' % i)
-        bug.run()
-    else:
-        mLog('Checkout your network!')
-	i = 0
+    try:
+        db.execute('CREATE TABLE movies(name text, img text primary key, link text)')
+    finally:
+        i = 1
+        while i:
+            i = i + 1
+            bug = domPa('/movie/list/-----p'+str(i), 'a')
+            if bug.status == 200:
+                mLog('HTTP Connect Succeed! To [p%i]' % i)
+                bug.run()
+            else:
+                mLog('Checkout your network!')
+        	i = 0
 
 
-db.close()
-mLog('DONE')
+        db.close()
+        mLog('DONE')
