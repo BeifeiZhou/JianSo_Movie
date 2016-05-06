@@ -6,7 +6,7 @@
 $(function() {
     $(".res-item").each(function(i,e) {
         $(e).click(function() {
-            alert($(e).attr("data-value"));
+            window.open($(e).attr("data-value"));
         });
     });
 });
