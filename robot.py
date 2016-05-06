@@ -46,11 +46,11 @@ class domPa(object):
         for res in result:
             for e in res.get():
                 dat = (e[0],e[1],e[2])
-                # try:
-                db.execute('INSERT INTO movies VALUES(?,?,?)',dat)
-                # except Exception as e:
-                #     screen['label'] = '*************SAME LINK!************'
-                #     mLog(screen)
+                try:
+                    db.execute('INSERT INTO movies VALUES(?,?,?)',dat)
+                except Exception as e:
+                    screen['label'] = '*************SAME LINK!************'
+                    mLog(screen)
         db.commit()
 
 
