@@ -1,10 +1,24 @@
 __author__ = 'but0n'
 from multiprocessing import Pool
 from bs4 import BeautifulSoup
-import time, random, requests, sqlite3
+import time, random, requests, sqlite3, os
+
+
 host = 'http://www.80s.tw'
-def mLog(label):
-    print('\033[0;32;31m[MASTER]\033[m: %s' % label)
+screen = {'label' : 'NONE', 'url' : 'http://baidu.com', 'title':'none', 'detail':'none', 'link':'none', 'index':0, 'total':10}
+def mLog():
+    os.system('clear')
+    opt = screen
+    print('\033[41;30m MESSAGE: %s\033[m' % opt['label'])
+    print('\033[46;30m PATH: %10s\033[m\n' % opt['url'])
+
+    print('\033[0;35m TITLE\033[m:\t%s' % opt['title'])
+    print('\033[0;34m DETAIL\033[m:%s' % opt['detail'])
+    print('\033[0;36m LINK\033[m:\t%s' % opt['link'])
+
+    bar_status = opt['index']*40/opt['total']
+    status = opt['index']*100/opt['total']
+    print('\n[%-40s]%s(%d/%d)' % ('>'*bar_status, str(status)+'%', opt['index'], opt['total']))
 
 def robLog(r_id, label, optColor = '\033[m'):
     print('\033[0;32;32m[ROBOT-%03d]\033[m: %s%s\033[m' % (r_id, optColor, label))
@@ -58,27 +72,31 @@ def botTask(i,e):
 
 
 
-mLog(u'but0n,I\'m Running!')
-mLog('Connect Database...')
+# mLog(u'but0n,I\'m Running!')
+# mLog('Connect Database...')
+screen['label'] = 'Connect Database...'
 db = sqlite3.connect('mv.db')
 
 
 
 
 if db:
-    mLog('Succeed!')
     try:
         db.execute('CREATE TABLE movies(name text, img text primary key, link text)')
+        screen['label']='CREATE TABLE movies(name text, img text primary key, link text)'
+        mLog()
     finally:
         i = 1
         while i:
-            i = i + 1
             bug = domPa('/movie/list/-----p'+str(i), 'a')
             if bug.status == 200:
-                mLog('HTTP Connect Succeed! To [p%i]' % i)
-                bug.run()
+                screen['label']='HTTP Connect Succeed! To [p'+str(i)+']'
+                mLog()
+                i+=1
+                # bug.run()
             else:
-                mLog('Checkout your network!')
+                screen['label'] = 'Checkout your network!'
+                mLog()
         	i = 0
 
 
