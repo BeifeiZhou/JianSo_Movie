@@ -1,27 +1,24 @@
 __author__ = 'but0n'
-from multiprocessing import Pool
+from multiprocessing import Pool, Manager
 from bs4 import BeautifulSoup
 import time, random, requests, sqlite3, os
 
-
+server = Manager()
 host = 'http://www.80s.tw'
-screen = {'label' : 'NONE', 'url' : 'http://baidu.com', 'title':'none', 'detail':'none', 'link':'none', 'index':0, 'total':10}
-def mLog():
+screen = server.dict({'label' : 'NONE', 'url' : 'http://baidu.com', 'title':'none', 'detail':'none', 'link':'none', 'index':0, 'total':10})
+def mLog(opt):
     os.system('clear')
-    opt = screen
     print('\033[41;30m MESSAGE: %s\033[m' % opt['label'])
     print('\033[46;30m PATH: %10s\033[m\n' % opt['url'])
 
     print('\033[0;35m TITLE\033[m:\t%s' % opt['title'])
-    print('\033[0;34m DETAIL\033[m:%s' % opt['detail'])
-    print('\033[0;36m LINK\033[m:\t%s' % opt['link'])
+    print('\033[0;34m DETAIL\033[m:%s' % opt['detail'][:60]+'...')
+    print('\033[0;36m LINK\033[m:\t%s' % opt['link'][:60]+'...')
 
     bar_status = opt['index']*40/opt['total']
     status = opt['index']*100/opt['total']
     print('\n[%-40s]%s(%d/%d)' % ('>'*bar_status, str(status)+'%', opt['index'], opt['total']))
 
-def robLog(r_id, label, optColor = '\033[m'):
-    print('\033[0;32;32m[ROBOT-%03d]\033[m: %s%s\033[m' % (r_id, optColor, label))
 
 class domPa(object):
     def __init__(self, path, section = 'a', title = '.title', img = '.img', detail = '.detail'):
@@ -36,38 +33,50 @@ class domPa(object):
         self.p = Pool(5)
 
     def run(self):
-        robLog(888, self.status)
-        robLog(888, len(self.dom.select(self.section)))
+        screen['url'] = self.path
+        screen['label'] = self.status
+        screen['total'] = len(self.dom.select('.me1.clearfix')[0].select('.h3'))
+        mLog(screen)
         result = []
-        for i,e in enumerate(self.dom.select(self.section)):
-            if (e.get('title') and e.get('href')!='/'):
-                result.append(self.p.apply_async(botTask,(i,e)))
+        for e in self.dom.select('.me1.clearfix')[0].select('.h3'):
+                result.append(self.p.apply_async(botTask, (e,)))
                 # self.botTask(i,e)
         self.p.close()
         self.p.join()
         for res in result:
             for e in res.get():
-                dat = (e[0],e[1])
-                db.execute('INSERT INTO movies VALUES(?,?)',dat)
+                dat = (e[0],e[1],e[2])
+                # try:
+                db.execute('INSERT INTO movies VALUES(?,?,?)',dat)
+                # except Exception as e:
+                #     screen['label'] = '*************SAME LINK!************'
+                #     mLog(screen)
         db.commit()
 
 
-def botTask(i,e):
-    robLog(i, 'Running...', '\033[0;36m')
-    start = time.time()
-    robLog(i, 'Jump to <%s>...' % e.get('title'))
+def botTask(e):
+    # robLog(i, 'Running...', '\033[0;36m')
+    # start = time.time()
+    # robLog(i, 'Jump to <%s>...' % e.get('title'))
+    e = e.select('a')[0]
     urll = host + e.get('href')
     pagee = requests.get(urll)
     dom = BeautifulSoup(pagee.text, 'html.parser')
     datas = []
+    m_detail = dom.select('.info')[0].select('span')[1].get_text()[9:-4]
+    screen['detail'] = m_detail[:50]+'...'
     for ee in dom.select('span.xunlei')[0].select('a'):
-        movieName = e.get('title')
+        movieName = ee.get('thunderrestitle')
         movieLink = ee.get('href')
-        # saveData(movieName, movieLink)
-        robLog(i, 'Got it ! [%s]@ %s' % (movieName, movieLink))
-        datas.append([movieName,movieLink])
-    end = time.time()
-    robLog(i, 'Task done! Cost %0.2fs' % (end-start), '\033[0;36m')
+        screen['title'] = movieName
+        screen['link'] = movieLink
+        mLog(screen)
+        # robLog(i, 'Got it ! [%s]@ %s' % (movieName, movieLink))
+        datas.append([movieName,movieLink, m_detail])
+
+    # end = time.time()
+    # robLog(i, 'Task done! Cost %0.2fs' % (end-start), '\033[0;36m')
+    screen['index'] += 1
     return (datas)
 
 
@@ -79,24 +88,24 @@ db = sqlite3.connect('mv.db')
 
 
 
-
 if db:
     try:
-        db.execute('CREATE TABLE movies(name text, img text primary key, link text)')
-        screen['label']='CREATE TABLE movies(name text, img text primary key, link text)'
+        db.execute('CREATE TABLE movies(name text, link text primary key, detail text)')
+        screen['label']='CREATE TABLE movies(name text, link text primary key, detail text)'
         mLog()
     finally:
         i = 1
         while i:
-            bug = domPa('/movie/list/-----p'+str(i), 'a')
+            bug = domPa('/movie/list/-----p'+str(i))
             if bug.status == 200:
+                screen['index']=0
                 screen['label']='HTTP Connect Succeed! To [p'+str(i)+']'
-                mLog()
-                i+=1
-                # bug.run()
+                mLog(screen)
+                i += 1
+                bug.run()
             else:
                 screen['label'] = 'Checkout your network!'
-                mLog()
+                mLog(screen)
         	i = 0
 
 
