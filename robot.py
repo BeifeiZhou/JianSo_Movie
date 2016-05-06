@@ -1,6 +1,7 @@
 import sys
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
+
 __author__ = 'but0n'
 from multiprocessing import Pool, Manager
 from bs4 import BeautifulSoup
