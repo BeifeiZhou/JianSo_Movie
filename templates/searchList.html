@@ -6,19 +6,17 @@
         <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/main.css')}}"/>
         <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/animation.css')}}"/>
         <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/search.css')}}"/>
-        <title>[{{title}}]相关电影-Jian'So</title>
+        <title>[吧]相关电影-Jian'So</title>
     </head>
     <body>
         <header>
             <div class="logo">Jian'So</div>
-            <div class="label">共找到了 {{result_len}} 部相关电影</div>
         </header>
         <section>
-            {% for item in result %}
-            <div class="res-item" data-value="{{item[1]}}">暂无图片
-                <div class="item-name">{{item[0]}}</div>
+            <div class="item">
+                <div class="item-img"></div>
+                <div class="item-label"></div>
             </div>
-            {% endfor %}
         </section>
         <script src="{{url_for('static', filename='scripts/jquery-2.1.4.min.js')}}"></script>
         <script src="{{url_for('static', filename='scripts/search.js')}}"></script>
