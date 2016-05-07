@@ -4,9 +4,22 @@
 //
 //=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=_=
 $(function() {
-    $(".res-item").each(function(i,e) {
+    $(".label-title").each(function(i,e) {
         $(e).click(function() {
-            window.open($(e).attr("data-value"));
+            $(".item").removeClass("item-active");
+            $(e).parent().parent().addClass("item-active");
+            $(e).text($(e).parent().parent().attr("_src"))
+        })
+    });
+    $('.dash-label').each(function(i,e) {
+        $(e).click(function() {
+            $(e).parent().parent().removeClass("item-active");
+            $(e).parent().next().next().find(".label-title").text($(e).text())
+        });
+    });
+    $('.dash-icon').each(function(i,e) {
+        $(e).click(function() {
+            window.open($(e).parent().parent().attr("_src"))
         });
     });
 });
