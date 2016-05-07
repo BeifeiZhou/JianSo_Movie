@@ -47,6 +47,7 @@ section > .message-total {
     background-position: center;
     border-radius: 100%;
     cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.26);
 }
 .item > .item-label {
     float: left;
