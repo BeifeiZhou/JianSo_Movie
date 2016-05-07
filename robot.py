@@ -65,7 +65,7 @@ def botTask(e):
     screen['title'] = movieName
     movieImg = dom_title_path_img.select('img')[0].get('_src')[2:]
     screen['IMG'] = movieImg
-    movieDetail = e.select('.tip')[0].get_text()[11:-11]
+    movieDetail = e.select('.tip')[0].get_text().strip()
     screen['detail'] = movieDetail[:50]+'...'
 
 

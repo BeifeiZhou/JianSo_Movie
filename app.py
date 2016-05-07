@@ -5,7 +5,7 @@ import sqlite3
 app = Flask(__name__)
 # app.config.from_object(__name__)
 def dbCon():
-	return sqlite3.connect('mvv.db')
+	return sqlite3.connect('mv.db')
 
 @app.before_request
 def before_request():
@@ -24,9 +24,10 @@ def search(key):
 	cur = g.db.cursor()
 	cur.execute('SELECT * FROM movies WHERE name LIKE ?',('%'+key+'%',))
 	dat = cur.fetchall()
-	return render_template('searchList.html', title = key, result_len = len(dat), result = dat)
+	return render_template('searchList.html')
+	# return render_template('searchList.html', title = key, result_len = len(dat), result = dat)
 
 
 if __name__ == '__main__':
-	# app.run(debug="true")
-	app.run()
+	app.run(debug="true")
+	# app.run()
