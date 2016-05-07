@@ -15,25 +15,95 @@ section {
     width: 900px;
     height: 800px;
     margin: -160px auto 0 auto;
-    padding: 20px 0;
-    background-color: red;
+    padding-bottom: 40px;
 }
 section > .item {
-    height: 180px;
+    min-height: 185px;
+    overflow: hidden;
     background-color: white;
-    cursor: pointer;
     color: rgba(255, 255, 255, 0.6);
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);;
+    transition: all .6s ease;
+}
+section > .item-active {
+    margin: 40px 0;
+    transform: scale(1.07);
 }
 section > .res-item:hover {
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
 }
+section > .message-total {
+    padding: 20px 0;
+    background-color: white;
+    font-size: 16px;
+    text-indent: 40px;
+    color: rgba(0, 0, 0, 0.26);
+}
 .item > .item-img {
     float: left;
     width: 105px;
-    height: 140px;
-    background-color: black;
+    height: 105px;
+    margin: 40px;
+    background-size: 105px;
+    background-position: center;
+    border-radius: 100%;
+    cursor: pointer;
 }
 .item > .item-label {
     float: left;
+    width: 715px;
+    height: 103px;
+    padding: 40px 0;
+    border-style: solid;
+    border-width: 0 0 2px 0;
+    border-color: #eaeaea;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.item-label > .label-title {
+    font-size: 24px;
+    color: rgba(0, 0, 0, 0.54);
+    cursor: pointer;
+    transition: all .1s ease;
+    text-decoration: underline;
+
+}
+.item-active  .label-title {
+    font-size: 15px;
+    color: rgb(55, 156, 205);
+    text-decoration: none;
+    cursor: text;
+    word-break: break-all;
+
+}
+
+.item-label > .label-detail {
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.26);
+}
+.item > .item-dashBar {
+    height: 0;
+    transition: all .1s ease;
+    opacity: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+}
+.item-dashBar > .dash-label {
+    font-size: 34px;
+    color: rgba(0, 0, 0, 0.54);
+    cursor: pointer;
+}
+.item-dashBar > .dash-icon {
+    width: 30px;
+    height: 30px;
+    background-image: url("../img/down.png");
+    cursor: pointer;
+}
+.item-active .item-dashBar {
+    height: 60px;
+    opacity: 1;
 }
