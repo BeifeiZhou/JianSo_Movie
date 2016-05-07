@@ -1,6 +1,6 @@
 import sys
 reload(sys)
-sys.setdefaultencoding( "utf-8" )
+sys.setdefaultencoding('utf-8')
 
 __author__ = 'but0n'
 from multiprocessing import Pool, Manager
@@ -9,13 +9,14 @@ import time, random, requests, sqlite3, os
 
 server = Manager()
 host = 'http://www.80s.tw'
-screen = server.dict({'label' : 'NONE', 'url' : 'http://baidu.com', 'title':'none', 'detail':'none', 'link':'none', 'index':0, 'total':10})
+screen = server.dict({'label' : 'NONE', 'url' : 'http://baidu.com', 'title':'none', 'IMG':'none', 'detail':'none', 'link':'none', 'index':0, 'total':10})
 def mLog(opt):
     os.system('clear')
     print('\033[41;30m MESSAGE: %s\033[m' % opt['label'])
     print('\033[46;30m PATH: %10s\033[m\n' % opt['url'])
 
     print('\033[0;35m TITLE\033[m:\t%s' % opt['title'])
+    print('\033[0;35m IMG\033[m:\t%s' % opt['IMG'][:30]+'...')
     print('\033[0;34m DETAIL\033[m:%s' % opt['detail'][:60]+'...')
     print('\033[0;36m LINK\033[m:\t%s' % opt['link'][:60]+'...')
 
@@ -39,19 +40,19 @@ class domPa(object):
     def run(self):
         screen['url'] = self.path
         screen['label'] = self.status
-        screen['total'] = len(self.dom.select('.me1.clearfix')[0].select('.h3'))
+        screen['total'] = len(self.dom.select('.me1.clearfix')[0].select('li'))
         mLog(screen)
         result = []
-        for e in self.dom.select('.me1.clearfix')[0].select('.h3'):
+        for e in self.dom.select('.me1.clearfix')[0].select('li'):
                 result.append(self.p.apply_async(botTask, (e,)))
                 # self.botTask(i,e)
         self.p.close()
         self.p.join()
         for res in result:
             for e in res.get():
-                dat = (e[0],e[1],e[2])
+                dat = (e[0],e[1],e[2],e[3])
                 try:
-                    db.execute('INSERT INTO movies VALUES(?,?,?)',dat)
+                    db.execute('INSERT INTO movies VALUES(?,?,?,?)',dat)
                 except Exception as e:
                     screen['label'] = '*************SAME LINK!************'
                     mLog(screen)
@@ -59,24 +60,25 @@ class domPa(object):
 
 
 def botTask(e):
-    # robLog(i, 'Running...', '\033[0;36m')
-    # start = time.time()
-    # robLog(i, 'Jump to <%s>...' % e.get('title'))
-    e = e.select('a')[0]
-    urll = host + e.get('href')
+    dom_title_path_img = e.select('a')[0]
+    movieName = dom_title_path_img.get('title')
+    screen['title'] = movieName
+    movieImg = dom_title_path_img.select('img')[0].get('_src')[2:]
+    screen['IMG'] = movieImg
+    movieDetail = e.select('.tip')[0].get_text()[11:-11]
+    screen['detail'] = movieDetail[:50]+'...'
+
+
+    urll = host + dom_title_path_img.get('href')
     pagee = requests.get(urll)
     dom = BeautifulSoup(pagee.text, 'html.parser')
     datas = []
-    m_detail = dom.select('.info')[0].select('span')[1].get_text()[9:-4]
-    screen['detail'] = m_detail[:50]+'...'
     for ee in dom.select('span.xunlei')[0].select('a'):
-        movieName = ee.get('thunderrestitle')
         movieLink = ee.get('href')
-        screen['title'] = movieName
         screen['link'] = movieLink
         mLog(screen)
         # robLog(i, 'Got it ! [%s]@ %s' % (movieName, movieLink))
-        datas.append([movieName,movieLink, m_detail])
+        datas.append([movieName,movieLink, movieDetail,movieImg])
 
     # end = time.time()
     # robLog(i, 'Task done! Cost %0.2fs' % (end-start), '\033[0;36m')
@@ -94,8 +96,8 @@ db = sqlite3.connect('mv.db')
 
 if db:
     try:
-        db.execute('CREATE TABLE movies(name text, link text primary key, detail text)')
-        screen['label']='CREATE TABLE movies(name text, link text primary key, detail text)'
+        db.execute('CREATE TABLE movies(name text, link text primary key, detail text, img text)')
+        screen['label']='CREATE TABLE...'
         mLog()
     finally:
         i = 1
