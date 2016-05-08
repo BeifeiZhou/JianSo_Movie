@@ -20,7 +20,7 @@ $(function() {
     });
     $('.dash-icon').each(function(i,e) {
         $(e).click(function() {
-            window.open($(e).parent().parent().attr("_src"))
+            window.location.href = $(e).parent().parent().attr("_src")
         });
     });
 });
