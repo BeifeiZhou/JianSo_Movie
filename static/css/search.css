@@ -48,6 +48,7 @@ section > .message-total {
     border-radius: 100%;
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.26);
+    transition: all .2s ease;
 }
 .item > .item-label {
     float: left;
@@ -75,6 +76,7 @@ section > .message-total {
     text-decoration: none;
     cursor: text;
     word-break: break-all;
+    padding-right: 20px;
 
 }
 
@@ -105,7 +107,7 @@ section > .message-total {
     cursor: pointer;
     transition: all .2s ease;
 }
-.item-dashBar > .dash-icon:hover, .item > .item-img {
+.item-dashBar > .dash-icon:hover,.item > .item-img:hover {
     transform: rotate(360deg);
 }
 .item-active .item-dashBar {
