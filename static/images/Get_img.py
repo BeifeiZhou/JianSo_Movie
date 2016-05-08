@@ -18,7 +18,7 @@ def commit(opt):
     print('\n[%-40s]%s(%d/%d)' % ('>'*bar_status, str(status)+'%', opt['index'], opt['total']))
 
 def saveImg(url):
-    name = url[-16:].strip()
+    name = url[-16:].strip('\')
     cache = requests.get('http://'+url, stream = True)
     img = cache.content
     with open(name,'w') as jpg:
