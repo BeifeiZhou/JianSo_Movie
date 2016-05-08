@@ -103,6 +103,10 @@ section > .message-total {
     height: 30px;
     background-image: url("../img/down.png");
     cursor: pointer;
+    transition: all .2s ease;
+}
+.item-dashBar > .dash-icon:hover, .item > .item-img {
+    transform: rotate(360deg);
 }
 .item-active .item-dashBar {
     height: 60px;
