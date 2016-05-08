@@ -20,7 +20,7 @@
                     <div class="dash-label">{{item[0]}}</div>
                     <div class="dash-icon"></div>
                 </div>
-                <div class="item-img" style="background-image:url({{url_for('static', filename='images/'+item[3][-16:].strip('\'))}})"></div>
+                <div class="item-img" style="background-image:url({{url_for('static', filename='images/'+item[3][-16:].replace('/','_'))}})"></div>
                 <div class="item-label">
                     <div class="label-title">{{item[0]}}</div>
                     <div class="label-detail">{{item[2]}}</div>
