@@ -27,6 +27,6 @@ def search(key):
 	return render_template('searchList.html', title = key, result_len = len(dat), result = dat)
 
 
-if __name__ == '__main__':
-	# app.run(debug="true")
-	app.run(host='0.0.0.0', port=80)
+#if __name__ == '__main__':
+        # app.run(debug="true")
+app.run()
