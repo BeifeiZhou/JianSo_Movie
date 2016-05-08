@@ -23,4 +23,9 @@ $(function() {
             window.location.href = $(e).parent().parent().attr("_src")
         });
     });
+    $('.item-img').each(function(i,e) {
+        $(e).click(function() {
+            $(e).next().children().eq(0).click()
+        });
+    });
 });
