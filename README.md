@@ -13,9 +13,9 @@
 # Crawler
 
 ![get_mov](/img/get_mov.png)
-Get link, name, detail, image url of movies
+^ Get link, name, detail, image url of movies
 
 ![get_img](/img/get_img.png)
-Download images
+^ Download images
 
 ## Just for fun!
