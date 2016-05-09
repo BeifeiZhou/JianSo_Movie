@@ -1,17 +1,26 @@
+section {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    /*align-items: center;*/
+    align-items: center;
+}
 section > .logo {
-    color: black;
-    font-size: 80px;
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 1rem;
+    height: 50vh;
+    line-height: 50vh;
     font-family: monospace;
     text-align: center;
-    padding: 150px 0 100px 0;
-    /*background-color: rgba(0, 0, 0, 0.2);*/
 }
 section > .search-box {
-    width: 450px;
-    margin: 0 auto;
+    /*width: 450px;*/
+    width: 9rem;
     overflow: hidden;
     border-radius: 4px;
-    transition: all .6s ease;
+    transition: box-shadow .6s ease;
+    display: flex;
+    align-self: center;
 }
 section > .search-box:hover {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);;
@@ -21,7 +30,6 @@ section > .search-box:hover {
     float: left;
     padding: 0;
     margin: 0;
-    width: 356px;
     height: 36px;
     border-style: solid;
     border-color: rgb(69, 168, 240);
@@ -30,15 +38,16 @@ section > .search-box:hover {
     outline: none;
     font-size: 20px;
     text-indent: 10px;
+    flex: 0 0 80%;
+    background-color: rgba(255, 255, 255, 0.4);
 }
 .search-box > .key-submit {
     float: left;
-    width: 90px;
-    height: 40px;
     background-color: rgb(69, 168, 240);
     border-radius: 0 4px 4px 0;
     cursor: pointer;
-    transition: all .6s ease;
+    transition: background-color .6s ease;
+    flex: 0 0 20%;
 
 }
 .search-box > .key-submit:hover {

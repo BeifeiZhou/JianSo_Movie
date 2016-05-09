@@ -19,17 +19,20 @@ def commit(opt):
 
 def saveImg(url):
     name = url[-16:].replace('/','_')
-    cache = requests.get('http://'+url, stream = True)
-    img = cache.content
-    with open(name,'w') as jpg:
-        s['label'] = cache.status_code
-        s['title'] = name
-        s['IMG'] = url
-        s['index']+=1
-        commit(s)
-        jpg.write(img)
-        return
-
+    try:
+        cache = requests.get('http://'+url, stream = True, timeout=10)
+        img = cache.content
+        with open(name,'w') as jpg:
+            s['label'] = cache.status_code
+            s['title'] = name
+            s['IMG'] = url
+            s['index']+=1
+            commit(s)
+            jpg.write(img)
+            return
+    except Exception as e:
+            s['label'] = e
+            return
 
 
 
