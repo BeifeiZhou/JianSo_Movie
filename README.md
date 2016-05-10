@@ -19,19 +19,19 @@
 ^ Download images
 
 # Tree
-.
+```
 ├── LICENSE
 ├── README.md
 ├── config.ini
-├── hello.py    `Flask`
-├── img   `Readme img`
+├── hello.py    \\Flask
+├── img   \\Readme img
 │   ├── get_img.png
 │   ├── get_mov.png
 │   └── webno.gif
-├── jian_nginx.conf   `Nginx Config`
-├── mv.db   `Data base`
-├── note.txt    `Python Note`
-├── robot.py    `电影爬虫,数据将保存在mv.db`
+├── jian_nginx.conf   \\Nginx Config
+├── mv.db   \\Data base
+├── note.txt    \\Python Note
+├── robot.py    \\电影爬虫,数据将保存在mv.db
 ├── static
 │   ├── css
 │   │   ├── animation.css
@@ -39,9 +39,9 @@
 │   │   ├── main.css
 │   │   └── search.css
 │   ├── images
-│   │   └── Get_img.py    `Download images`
+│   │   └── Get_img.py    \\Download images
 │   ├── img
-│   │   └── down.png    `HTML img`
+│   │   └── down.png    \\HTML img
 │   └── scripts
 │       ├── index.js
 │       ├── jquery-2.1.4.min.js
@@ -51,4 +51,4 @@
 │   └── searchList.html
 └── venv
     ├ ...
-
+```
