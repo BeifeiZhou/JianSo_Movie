@@ -1,6 +1,6 @@
 # JianSo_Movie
 
-* 多线程电影资源爬虫
+* 多进程电影资源爬虫
 * 电影图片抓取脚本
 * Flask+Nginx+wsgi网站架构
 * SQlite3
