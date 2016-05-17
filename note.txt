@@ -1,0 +1,317 @@
+Python中空白符是有意义的，当代码处于同一缩进时，形成代码块
+
+语句结束没有分号
+
+基础部分
+
+1. 变量不需要声明类型
+
+2. 字符串
+
+‘abc’ 或者 " abc"
+
+‘’' ：可以含有回车，’，"，的字符串
+
+字符串占位符：k = ”a %s%s ”=>拼接：k % 1 //只有一个%s
+
+k % (1,2)//有两个%s
+
+’a’ * 3 = ‘aaa'
+
+3.数组
+
+[xx,xx]
+
+3.1用下标访问[2],从0索引
+
+[2 : 5] 区间
+
+3.2可以混合各种类型(数字，字符串。。。)
+
+3.3添加元素：某个list.append(xx)
+
+3.4删除元素：del 某个list[2]
+
+3.5链接两个数组：list1 + list2
+
+list1 * 3 = list1 + list1 + list1
+
+3.6遍历: for i in list1: print(i);
+
+4.元组
+
+(xx,xx)一旦定以后不能更改
+
+5.map
+
+5.1{key1 : val1, key2 : val2}
+
+5.2删除：del map1[key1]
+
+5.3添加：map[key3] = val3
+
+5.4不能 map1+map2
+
+5.5遍历：for key in map1.keys():
+
+key1 = key
+
+val1 = map1[key]
+
+5.6map1.clear() //清空map内容
+
+del map1 //删除整个map
+
+5.7map1.keys()/.values()
+
+6.turtle库，用于绘图
+
+import turtle
+
+t = turtle.Pen()
+
+t.forward(10)//向前
+
+t.left(90)//向右转
+
+t.right(90)
+
+t.up()//拿起
+
+t.down()//放下
+
+7. if…else
+
+7.1 if 条件:
+
+语句//有个冒号
+
+7.2 if 条件:
+
+语句
+
+else:
+
+语句
+
+7.3 if 条件:
+
+语句
+
+elif 条件:
+
+语句//else if
+
+7.4条件中可以用 or 或者 and 连接 not
+
+8.空值：None
+
+9.int(’10’) => 10
+
+float(’10.1’) => 10.1
+
+10.循环
+
+10.1 for x in range(0,5) :
+
+10.2 list,map的遍历
+
+10.3 while i < 100 :
+
+10.4 break/continue/True/False
+
+11.range代表范围
+
+print(list(range(10,20))
+
+将10-20的数字转换成list，打印出来
+
+12.注释#
+
+提高部分
+
+1. 函数
+
+定义 def fun(param1, p2, p3):
+
+内容
+
+调用  fun(p1,p2,p3)
+
+2. 模块
+
+import 模块名字
+
+sys, time
+
+3.类，对象
+
+class Base:
+
+pass //该类没有更多信息了
+
+3.1 继承
+
+class Derived (Base) :
+
+pass
+
+3.2 对象
+
+d = Derived()
+
+3.3 函数成员
+
+class Derived(Base):
+
+def f1( self ):
+
+内容
+
+d.f1()
+
+要调用同一个类中或者父类中的其他函数，使用self作参数，同时调用时仍然没有参数
+
+def f1( self ):
+
+self.f2()
+
+d.f1()
+
+3.4 初始化参数
+
+构造函数 __init__ (self, p1, p2):
+
+内容
+
+可以通过self.p1 = p1 赋值，Derived中不需要有p1
+
+ps一定要有self, 否则会报错 “Type Error： takes 0 positional arguments but 1 was given”
+
+库函数
+
+1.输出  print()
+
+2.输入 input() / sys.stdin.readline()
+
+3. abs()
+
+4.转型：bool(), int(), float()
+
+//0=>False
+
+//None=>False
+
+//[]=>False
+
+//“”=>False
+
+5. len() =>对list, map, string
+
+6. max(), min()
+
+返回list,元组中的最大，最小值。也可以返回用,隔开的字符串中的最大最小值(“a,v,b")
+
+也可以直接将数字用,隔开作为参数传入(a,b,c)
+
+7.sum() 列表中元素想家
+
+8. range(0,5) 返回一个迭代器，可以重复一个动作很多次
+
+range(开始,结束, 步长)
+
+开始不一定要>结束
+
+9. dir()
+
+dir(list, int, string, map)=>可以对某个类型使用的函数列表，__Fun__Python自己调用的函数
+
+10. help(fun)//不加()
+
+返回函数怎么用
+
+11. eval() 将字符串作为参数并且返回它作为表达式的结果
+
+eval(’10 * 5’)
+
+eval(‘print(“123”)')
+
+但不能运算拆分成多行的表达式
+
+12. exec() 和eval类似，可以将多行字符串作为参数，一般可以从另外一个文件中读取Python代码，再运行
+
+eval()返回一个值，exec()不返回
+
+13. 库copy
+
+a = copy.copy(b) 浅拷贝
+
+copy.deepcopy(b) 深拷贝
+
+14. 库random
+
+random.randint(start, end)
+
+random.choice(list) 从列表中随机取出一个数
+
+random.shuffle(list) 洗牌
+
+15. 库sys
+
+sys.exit() 退出shell程序
+
+sys.stdin.readline()
+
+sys.stdin.readline(读入字数)
+
+sys.stdout.write()
+
+sys.version 版本
+
+16. 库time
+
+time.time() 秒数
+
+time.asctime() 可读的方式返回日期时间
+
+time.asctime((年，月，日，时，分，秒，周几，一年中的第几天，是否为夏令时间)) 最后可以两个为0，返回可读的日期时间
+
+time.localtime() 返回time对象，含有日期时间
+
+time.sleep(秒数)
+
+文件操作
+
+1.打开 file = open(“c;\\test.txt")
+
+2.读取 text = file.read()
+
+3.写入 file = open(“c;\\test.txt”， ”w”) //write
+
+file.write(“...")
+
+4.关闭 file.close()
+
+5. 库os
+
+os.listdir() 返回所有文件和目录名
+os.remove() 删除文件
+os.removedirs() 删除目录
+os.path.isfile()/isdir()/exists()/isabs() 是否是一个文件/目录/存在/是否是绝对目录
+os.path.split() 返回目录，文件名
+os.path.dirname()/basename()
+os.system() 运行shell命令
+os.makedirs() 创建目录
+os.mkir() 在当前path中创建目录
+os.exit() 终止进程
+os.rename()
+6. 库shutil
+
+shutil.copyfile() 文件
+shutil.copy() 目录
+shutil.move()
+shutil.rmtree() 删除目录
+6. 库pickle 将python对象转换成可以读写到文件中的形式=>序列化
+
+pickle.dump(data, file)
+data = pickle.load(file)
